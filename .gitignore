@@ -9,3 +9,6 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+audit_report.csv
+clean_ledger.csv
+quarantine_ledger.csv

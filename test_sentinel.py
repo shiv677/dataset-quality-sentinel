@@ -200,3 +200,12 @@ def test_scan_csv_and_export_ledgers(tmp_path: Path):
         assert "doc_006" in quarantined_ids  # empty
         assert "doc_007" in quarantined_ids  # token length anomaly
         assert "doc_008" in quarantined_ids  # mojibake
+
+
+def test_audit_rows_none_text_flagged_empty():
+    sentinel = DatasetQualitySentinel()
+    stats = sentinel.audit_rows([{"id": "1", "text": None}])
+    assert stats["corrupt"] == 1
+    assert stats["clean"] == 0
+    assert sentinel.records[0]["status"] == "CORRUPT"
+    assert "EMPTY_TEXT" in sentinel.records[0]["flags"]

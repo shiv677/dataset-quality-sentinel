@@ -67,7 +67,7 @@ pip install pydantic pytest
 ### 2. Run Audit on Sample Dataset
 
 ```bash
-python main.py sample_corrupt_data.csv
+python main.py --input sample_corrupt_data.csv
 ```
 
 Outputs:

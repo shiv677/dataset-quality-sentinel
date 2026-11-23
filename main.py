@@ -61,6 +61,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Audit dataset CSV for Unicode anomalies, corruption, and duplicates."
     )
+    parser.add_argument("input_pos", nargs="?", type=Path, default=None, help="Optional positional input CSV.")
     parser.add_argument("--input", type=Path, default=default_csv, help="Input CSV to audit.")
     parser.add_argument("--output", type=Path, default=default_out, help="Output audit report CSV path.")
     parser.add_argument(
@@ -82,9 +83,10 @@ def main():
         help="Max Hamming distance for near duplicates (default: 3).",
     )
     args = parser.parse_args()
+    input_path = args.input_pos if args.input_pos is not None else args.input
 
     run_sentinel_audit(
-        input_csv=args.input,
+        input_csv=input_path,
         output_csv=args.output,
         clean_ledger_csv=args.clean_ledger,
         quarantine_ledger_csv=args.quarantine_ledger,

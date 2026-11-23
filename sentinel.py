@@ -163,8 +163,10 @@ class DatasetQualitySentinel:
         seen_simhashes: list[tuple[int, str]] = []  # (simhash, record_id)
 
         for row in rows:
-            rec_id = str(row.get(id_col, "")).strip() or f"row_{len(self.records)+1}"
-            raw_text = str(row.get(text_col, ""))
+            id_val = row.get(id_col)
+            rec_id = ("" if id_val is None else str(id_val)).strip() or f"row_{len(self.records)+1}"
+            val = row.get(text_col)
+            raw_text = "" if val is None else str(val)
 
             self.stats["total_records"] += 1
             corruption_flags = detect_corruption(
